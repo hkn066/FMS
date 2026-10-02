@@ -4,33 +4,33 @@ Date: 2026-10-02
 
 Agent: Cursor (Full-Stack Implementer)
 
-Status: **Git İndeks Temizliği, Kök .gitignore Kurulumu ve Kullanıcı Prompt Kılavuzu Taşınması (INFRA-GIT-001 ✅)**
+Status: **FMS Ana Repo + FMS-BE & FMS-FE Git Submodule Mimarisi Kuruldu (INFRA-GIT-002 ✅)**
 
 ---
 
 ## Objectives
 
-1. **Git İndeks Temizliği:** Versiyon kontrolüne girmemesi gereken hassas/geçici dosyaların (`logs/`, `.idea/`, `.vscode/`, `komut_promtu.txt`) diskten silinmeden Git takibinden (`git rm --cached`) çıkarılması.
-2. **Kök .gitignore Yapılandırması:** Gelecekte hassas `.env` dosyaları, runtime logları ve IDE metadata'larının depoya girmesini engelleyen kök `.gitignore` dosyasının oluşturulması.
-3. **Kullanıcı Prompt Kılavuzu:** `komut_promtu.txt` dosyasındaki kullanıcı-yapay zeka etkileşim şablonlarının `.ai-os/06_PROMPTS/USER_PROMPT_GUIDE.md` altına standart kılavuz olarak aktarılması.
+1. **Git Submodule Ayrıştırması:** Kullanıcı talebi doğrultusunda monolitik yapıdan Git Submodule mimarisine geçilmesi. `FMS` ana repo altında `FMS-BE` (Spring Boot) ve `FMS-FE` (Next.js 15) alt repoları bağımsız Git depoları olarak yapılandırıldı.
+2. **Klasör Yeniden Adlandırma:** `FMS_BackEnd` -> `FMS-BE` ve `FMS_FrontEnd` -> `FMS-FE` olarak güncellendi.
+3. **Otomasyon & Script Senkronizasyonu:** `run.ps1`, `run.sh`, `scripts/setup-github.ps1` ve AI-OS dokümantasyonları yeni dizin yapısına uyarlandı.
+4. **Push Hazırlığı:** Kullanıcının GitHub hesabına (`hkn066`) push yapabilmesi için `scripts/push-all.ps1` tek komutluk yardımcı script hazırlandı.
 
 ---
 
 ## Technical Details
 
-- **Kök .gitignore:** `logs/`, `*.log`, `*.pid`, `.env*`, `.idea/`, `.vscode/`, `node_modules/`, `target/` desenlerini kapsayan güvenlik ve temizlik kural seti tanımlandı.
-- **Git Takip Kaldırma:** `git rm -r --cached` ile dosyalar çalışma dizininde korunarak Git indeksinden arındırıldı.
-- **AI-OS Entegrasyonu:** `.ai-os/06_PROMPTS/USER_PROMPT_GUIDE.md` oluşturuldu ve `06_PROMPTS/README.md` dizinine eklendi.
+- `FMS-BE` ve `FMS-FE` dizinlerinde `git init`, initial commit ve `origin` remote tanımlamaları (`https://github.com/hkn066/FMS-BE.git` ve `https://github.com/hkn066/FMS-FE.git`) tamamlandı.
+- Kök `FMS` deposunda `.gitmodules` tanımlandı ve alt modüller gitlink (`160000`) olarak bağlandı.
+- Kök deponun `origin` remote adresi `https://github.com/hkn066/FMS.git` olarak atandı.
 
 ---
 
 ## Modified Files
 
-- `.gitignore` (Yeni oluşturuldu)
-- `.ai-os/06_PROMPTS/USER_PROMPT_GUIDE.md` (Yeni oluşturuldu)
-- `.ai-os/06_PROMPTS/README.md` (Güncellendi)
-- `.ai-os/02_MEMORY/LAST_SESSION.md` (Güncellendi)
-- `.ai-os/02_MEMORY/CHANGELOG.md` (Güncellendi)
+- `.gitmodules` (Oluşturuldu)
+- `run.ps1`, `run.sh`, `scripts/setup-github.ps1` (Güncellendi)
+- `scripts/push-all.ps1` (Oluşturuldu)
+- `.ai-os/` (Doküman ve yol senkronizasyonları tamamlandı)
 
 - **Klasör Ağacı Buton Konumu:** Daha önce `...` butonu satırın en sağında yer alıyordu; geniş panellerde veya kısa klasör isimlerinde buton ile klasör arasında büyük boşluk kalıyor ve imleç mesafesini artırıyordu.
 

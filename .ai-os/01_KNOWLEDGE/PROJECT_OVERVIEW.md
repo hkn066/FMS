@@ -25,9 +25,9 @@ Hukuk ofisleri müvekkil, dava, evrak, duruşma, görev ve bildirim süreçlerin
 ## Repo Yapısı
 
 ```
-FMS/
-├── FMS_BackEnd/     # Spring Boot modular monolith API
-├── FMS_FrontEnd/    # Next.js 15 web uygulaması
+FMS/                 # Ana Çatı Repo (Git Submodule orkestrasyonu & AI-OS)
+├── FMS-BE/          # Spring Boot modular monolith API (Alt Repo / Submodule)
+├── FMS-FE/          # Next.js 15 web uygulaması (Alt Repo / Submodule)
 ├── .ai-os/          # AI Operating System — tek kaynak (agent bağlamı)
 ├── FMS.drawio       # Mimari diyagram
 └── ai-context/      # DEPRECATED — yönlendirme stub'ları

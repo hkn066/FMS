@@ -4,8 +4,8 @@
 
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
-$Backend = Join-Path $Root "FMS_BackEnd"
-$Frontend = Join-Path $Root "FMS_FrontEnd"
+$Backend = Join-Path $Root "FMS-BE"
+$Frontend = Join-Path $Root "FMS-FE"
 $GhUser = "hkn066"
 
 function Test-Gh {
@@ -56,13 +56,13 @@ if (-not (Test-Gh)) {
     Write-Host "GitHub CLI (gh) is not installed." -ForegroundColor Yellow
     Write-Host "Option A: Install gh (admin PowerShell): winget install GitHub.cli"
     Write-Host "Option B: Create repos manually at https://github.com/new (Private, no README)"
-    Write-Host "  - $GhUser/FMS_BackEnd"
-    Write-Host "  - $GhUser/FMS_FrontEnd"
+    Write-Host "  - $GhUser/FMS-BE"
+    Write-Host "  - $GhUser/FMS-FE"
     Write-Host ""
 }
 
-Ensure-Repo -Name "FMS_BackEnd" -Description "FMS — Law Office Management Backend (Spring Boot)" -Path $Backend
-Ensure-Repo -Name "FMS_FrontEnd" -Description "FMS — Law Office Management Frontend (Next.js)" -Path $Frontend
+Ensure-Repo -Name "FMS-BE" -Description "FMS — Law Office Management Backend (Spring Boot)" -Path $Backend
+Ensure-Repo -Name "FMS-FE" -Description "FMS — Law Office Management Frontend (Next.js)" -Path $Frontend
 
 Write-Host ""
 Write-Host "Done." -ForegroundColor Green

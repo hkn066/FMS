@@ -54,7 +54,7 @@ Altyapı servislerini (Postgres, Redis, RabbitMQ, MinIO) Docker ile ayağa kald�
 
 ```bash
 # 1. Altyapı konteynerlerini başlat
-cd FMS_BackEnd
+cd FMS-BE
 docker compose up -d
 
 # 2. Konteyner durumlarını kontrol et
@@ -64,7 +64,7 @@ docker compose ps
 mvn spring-boot:run
 
 # 4. Frontend'i çalıştır (yeni terminal)
-cd ../FMS_FrontEnd
+cd ../FMS-FE
 npm install
 npm run dev
 ```
@@ -89,7 +89,7 @@ redis-server
 minio server "$env:USERPROFILE\minio-data" --console-address ":9001"
 
 # RabbitMQ yoksa backend'i devre dışı bırakarak çalıştırma:
-cd FMS_BackEnd
+cd FMS-BE
 $env:RABBITMQ_ENABLED="false"
 $env:SPRING_AUTOCONFIGURE_EXCLUDE="org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration"
 mvn -DskipTests spring-boot:run

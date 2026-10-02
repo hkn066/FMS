@@ -23,8 +23,8 @@ NC='\033[0m' # No Color
 
 # Dizinler
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BACKEND_DIR="$SCRIPT_DIR/FMS_BackEnd"
-FRONTEND_DIR="$SCRIPT_DIR/FMS_FrontEnd"
+BACKEND_DIR="$SCRIPT_DIR/FMS-BE"
+FRONTEND_DIR="$SCRIPT_DIR/FMS-FE"
 LOGS_DIR="$SCRIPT_DIR/logs"
 
 mkdir -p "$LOGS_DIR"

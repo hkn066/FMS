@@ -13,14 +13,14 @@ Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli mi
 | Backend API | Çalışır durumda | ~95% |
 | Frontend Web | Çalışır durumda | ~94% |
 | Docker ortamı | Çalışır durumda (Postgres, Redis, RabbitMQ, MinIO) | ~95% |
-| Git / GitHub | Kök .gitignore ve indeks temizlendi | Hazır |
+| Git / GitHub | FMS (Ana Repo) + FMS-BE & FMS-FE (Submodule) hazır | Push bekliyor |
 | Mobil (Flutter) | Başlanmadı | 0% |
 | Client Portal | Başlanmadı | 0% |
 | AI / Search servisleri | Global Search API + UI | ~50% |
 
 ---
 
-## Backend (FMS_BackEnd)
+## Backend (FMS-BE)
 
 **Stack:** Java 21, Spring Boot 3.4.5, PostgreSQL, Redis, RabbitMQ, MinIO, Flyway, SpringDoc OpenAPI 2.8.6
 
@@ -109,7 +109,7 @@ Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli mi
 
 ---
 
-## Frontend (FMS_FrontEnd)
+## Frontend (FMS-FE)
 
 **Stack:** Next.js 15.3.3, React 19.1.0, Tailwind 4.1.8, TanStack Query 5.80.7, Zustand 5.0.5
 

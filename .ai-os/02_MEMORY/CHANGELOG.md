@@ -6,6 +6,13 @@ Tüm önemli proje değişiklikleri burada kayıt altına alınır.
 
 ## 2026-10-02
 
+### Altyapı — FMS Ana Repo + FMS-BE & FMS-FE Git Submodule Mimarisi (INFRA-GIT-002 ✅)
+
+- Proje yapısı Git Submodule mimarisine dönüştürüldü: `FMS` ana repo altında `FMS-BE` ve `FMS-FE` iki bağımsız alt repo olarak entegre edildi.
+- Klasör isimleri tireli standarda (`FMS-BE`, `FMS-FE`) dönüştürüldü.
+- `run.ps1`, `run.sh`, `scripts/setup-github.ps1`, `.gitmodules` ve ilgili tüm AI-OS dokümanları senkronize edildi.
+- Kolay push için `scripts/push-all.ps1` oluşturuldu.
+
 ### Altyapı — Kök .gitignore, Git İndeks Temizliği ve Kullanıcı Prompt Kılavuzu (INFRA-GIT-001 ✅)
 
 **Git / Depo Yönetimi & Güvenlik**

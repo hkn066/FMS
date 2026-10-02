@@ -17,8 +17,8 @@ param (
 $ErrorActionPreference = "Continue"
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$BackendDir = Join-Path $ScriptDir "FMS_BackEnd"
-$FrontendDir = Join-Path $ScriptDir "FMS_FrontEnd"
+$BackendDir = Join-Path $ScriptDir "FMS-BE"
+$FrontendDir = Join-Path $ScriptDir "FMS-FE"
 $LogsDir = Join-Path $ScriptDir "logs"
 
 if (-not (Test-Path $LogsDir)) {
