@@ -1,6 +1,6 @@
 # Current State
 
-Son güncelleme: 2026-09-22 (DMS Klasör Ağacı İşlem İkonu Konumlandırması & Expired JWT Login Çözümü — TASK-DMS-011 & BUGFIX-AUTH-001)
+Son güncelleme: 2026-10-02 (Kök .gitignore, Git İndeks Temizliği & Prompt Kılavuzu — INFRA-GIT-001)
 
 Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli milestone sonrası güncellenmelidir.
 
@@ -13,7 +13,7 @@ Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli mi
 | Backend API | Çalışır durumda | ~95% |
 | Frontend Web | Çalışır durumda | ~94% |
 | Docker ortamı | Çalışır durumda (Postgres, Redis, RabbitMQ, MinIO) | ~95% |
-| Git / GitHub | Lokal hazır, push bekliyor | Backend + Frontend ayrı repo |
+| Git / GitHub | Kök .gitignore ve indeks temizlendi | Hazır |
 | Mobil (Flutter) | Başlanmadı | 0% |
 | Client Portal | Başlanmadı | 0% |
 | AI / Search servisleri | Global Search API + UI | ~50% |

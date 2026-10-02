@@ -1,23 +1,37 @@
 # Last Session
 
-Date: 2026-09-22
+Date: 2026-10-02
 
 Agent: Cursor (Full-Stack Implementer)
 
-Status: **DMS Klasör Ağacı İşlem İkonu Konumlandırması & Expired JWT Giriş Hatası Düzeltildi (TASK-DMS-011 & BUGFIX-AUTH-001 ✅)**
+Status: **Git İndeks Temizliği, Kök .gitignore Kurulumu ve Kullanıcı Prompt Kılavuzu Taşınması (INFRA-GIT-001 ✅)**
 
 ---
 
 ## Objectives
 
-1. **Giriş Hatası (BUGFIX-AUTH-001):** Kullanıcının sisteme login olamama şikayeti üzerine `logs/backend.log` ve `logs/frontend.log` analiz edilerek unhandled `ExpiredJwtException` hatasının çözülmesi ve login akışının normale döndürülmesi.
-2. **Klasör Ağacı İkon Hizalaması (TASK-DMS-011):** Sistem genelinde (`/cases`, `/arbitration`, `/cases/[id]`, `/documents`) klasör işlemlerini tetikleyen `...` (`MoreHorizontal`) butonunun satır sonundaki uzak konumundan alınıp doğrudan klasör ikonunun (`Folder` / `FolderOpen`) hemen önüne (chevron ile klasör arasına) taşınması.
+1. **Git İndeks Temizliği:** Versiyon kontrolüne girmemesi gereken hassas/geçici dosyaların (`logs/`, `.idea/`, `.vscode/`, `komut_promtu.txt`) diskten silinmeden Git takibinden (`git rm --cached`) çıkarılması.
+2. **Kök .gitignore Yapılandırması:** Gelecekte hassas `.env` dosyaları, runtime logları ve IDE metadata'larının depoya girmesini engelleyen kök `.gitignore` dosyasının oluşturulması.
+3. **Kullanıcı Prompt Kılavuzu:** `komut_promtu.txt` dosyasındaki kullanıcı-yapay zeka etkileşim şablonlarının `.ai-os/06_PROMPTS/USER_PROMPT_GUIDE.md` altına standart kılavuz olarak aktarılması.
 
 ---
 
-## Root Cause & Technical Analysis
+## Technical Details
 
-- **Expired JWT Giriş Hatası:** `JwtAuthenticationFilter` içerisinde `jwtService.extractUsername(jwt)` doğrudan çağrılıyordu. Tarayıcıda kalmış süresi dolmuş token nedeniyle JJWT kütüphanesi unhandled `ExpiredJwtException` fırlatıp Tomcat seviyesinde 500 hatası üretiyor ve `/api/v1/auth/login` endpoint'inin çalışmasını engelliyordu. Frontend `apiClient` interceptor'ı da eski token'ı login isteğine bile ekliyordu.
+- **Kök .gitignore:** `logs/`, `*.log`, `*.pid`, `.env*`, `.idea/`, `.vscode/`, `node_modules/`, `target/` desenlerini kapsayan güvenlik ve temizlik kural seti tanımlandı.
+- **Git Takip Kaldırma:** `git rm -r --cached` ile dosyalar çalışma dizininde korunarak Git indeksinden arındırıldı.
+- **AI-OS Entegrasyonu:** `.ai-os/06_PROMPTS/USER_PROMPT_GUIDE.md` oluşturuldu ve `06_PROMPTS/README.md` dizinine eklendi.
+
+---
+
+## Modified Files
+
+- `.gitignore` (Yeni oluşturuldu)
+- `.ai-os/06_PROMPTS/USER_PROMPT_GUIDE.md` (Yeni oluşturuldu)
+- `.ai-os/06_PROMPTS/README.md` (Güncellendi)
+- `.ai-os/02_MEMORY/LAST_SESSION.md` (Güncellendi)
+- `.ai-os/02_MEMORY/CHANGELOG.md` (Güncellendi)
+
 - **Klasör Ağacı Buton Konumu:** Daha önce `...` butonu satırın en sağında yer alıyordu; geniş panellerde veya kısa klasör isimlerinde buton ile klasör arasında büyük boşluk kalıyor ve imleç mesafesini artırıyordu.
 
 ---

@@ -4,6 +4,20 @@ Tüm önemli proje değişiklikleri burada kayıt altına alınır.
 
 ---
 
+## 2026-10-02
+
+### Altyapı — Kök .gitignore, Git İndeks Temizliği ve Kullanıcı Prompt Kılavuzu (INFRA-GIT-001 ✅)
+
+**Git / Depo Yönetimi & Güvenlik**
+- Kök dizine kapsamlı `.gitignore` eklendi (`logs/`, `*.log`, `*.pid`, `.env*`, `.idea/`, `.vscode/`, `node_modules/`, `target/` desenleri korumaya alındı).
+- Yanlışlıkla Git geçmişine giren runtime dosyaları (`logs/`), IDE ayarları (`.idea/`, `.vscode/`) ve yerel `komut_promtu.txt` dosyası diskteki içeriğe dokunulmadan Git indeksinden (`git rm --cached`) çıkarıldı.
+
+**AI-OS (Prompt Katmanı)**
+- `.ai-os/06_PROMPTS/USER_PROMPT_GUIDE.md` oluşturuldu; standart kullanıcı görev formatı, full-stack, UI iyileştirme, hata bildirme ve oturum kapatma prompt şablonları resmi AI-OS dokümantasyonuna dahil edildi.
+- `06_PROMPTS/README.md` dosyası yeni kılavuzu içerecek şekilde güncellendi.
+
+---
+
 ## 2026-09-22
 
 ### UI/UX — DMS Klasör Ağacı İşlem İkonu Konumlandırması (TASK-DMS-011 ✅)

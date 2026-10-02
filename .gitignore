@@ -1,0 +1,43 @@
+# Logs & Runtime files
+logs/
+*.log
+*.pid
+
+# Environment variables & Secrets (Never commit credentials)
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# IDEs & Developer tools
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Temporary files & notes
+komut_promtu.txt
+*.tmp
+*.bak
+*.swp
+
+# Dependencies & Build artifacts (Safety net for root)
+node_modules/
+target/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo

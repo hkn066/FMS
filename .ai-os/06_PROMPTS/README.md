@@ -10,6 +10,7 @@ Agent davranış prompt'ları.
 | `CLAUDE_SYSTEM.md` | Claude | Architect |
 | `CHATGPT_SYSTEM.md` | ChatGPT | Reviewer |
 | `GEMINI_SYSTEM.md` | Gemini | Product Manager |
+| `USER_PROMPT_GUIDE.md` | Kullanıcı / Geliştirici | Standart görev & prompt şablonları |
 
 Cursor oturumları her zaman `CURSOR_SYSTEM.md` + `.cursor/rules/fms-ai-os.mdc` ile başlar.
 
