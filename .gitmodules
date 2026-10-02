@@ -1,0 +1,6 @@
+[submodule "FMS-BE"]
+	path = FMS-BE
+	url = https://github.com/hkn066/FMS-BE.git
+[submodule "FMS-FE"]
+	path = FMS-FE
+	url = https://github.com/hkn066/FMS-FE.git
