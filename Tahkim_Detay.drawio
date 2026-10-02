@@ -1,0 +1,13 @@
+<mxfile host="app.diagrams.net">
+<diagram name="Tahkim Detay">
+<mxGraphModel dx="1600" dy="900" grid="1" gridSize="10"><root>
+<mxCell id="0"/><mxCell id="1" parent="0"/>
+<mxCell id="bg" value="" style="rounded=0;fillColor=#f8fafc;strokeColor=none;" vertex="1" parent="1"><mxGeometry x="0" y="0" width="1600" height="900" as="geometry"/></mxCell>
+<mxCell id="side" value="Hukuk FMS&#xa;&#xa;Dashboard&#xa;Müvekkiller&#xa;Dosyalar&#xa;Belgeler&#xa;Takvim&#xa;Görevler&#xa;Finans&#xa;Mesajlar&#xa;Raporlar&#xa;Ayarlar" style="rounded=0;fillColor=#111827;fontColor=#ffffff;align=left;spacingLeft=15;verticalAlign=top;" vertex="1" parent="1"><mxGeometry x="0" y="0" width="220" height="900" as="geometry"/></mxCell>
+<mxCell id="top" value="Arama...                                                + Yeni Oluştur" style="fillColor=#ffffff;strokeColor=#dddddd;align=left;spacingLeft=20;" vertex="1" parent="1"><mxGeometry x="220" y="0" width="1380" height="60" as="geometry"/></mxCell>
+<mxCell id="title" value="Tahkim Detay" style="text;html=1;fontSize=20;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="240" y="75" width="300" height="30" as="geometry"/></mxCell>
+<mxCell id="card" value="06 abc 1234 - ali veli - 2026/12345&#xa;Ön Başvuru" style="rounded=1;fillColor=#ffffff;strokeColor=#d6d6d6;spacing=12;fontSize=18;" vertex="1" parent="1"><mxGeometry x="240" y="110" width="1320" height="150" as="geometry"/></mxCell>
+<mxCell id="tabs" value="Dosyalar | Genel Bakış" style="rounded=1;fillColor=#eef2f7;strokeColor=#eef2f7;spacing=10;" vertex="1" parent="1"><mxGeometry x="240" y="290" width="1320" height="40" as="geometry"/></mxCell>
+<mxCell id="folders" value="Klasörler&#xa;&#xa;📁 Tüm Evraklar&#xa;📁 ceza&#xa;📁 hukuk&#xa;  └ Ön Başvuru" style="rounded=1;fillColor=#ffffff;strokeColor=#d6d6d6;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1"><mxGeometry x="240" y="360" width="360" height="450" as="geometry"/></mxCell>
+<mxCell id="docs" value="Belge Ara...&#xa;&#xa;Belge Adı | Yükleyen | Tarih | Boyut | Durum" style="rounded=1;fillColor=#ffffff;strokeColor=#d6d6d6;align=left;verticalAlign=top;spacing=10;" vertex="1" parent="1"><mxGeometry x="620" y="360" width="940" height="450" as="geometry"/></mxCell>
+</root></mxGraphModel></diagram></mxfile>

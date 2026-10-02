@@ -1,0 +1,69 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0">
+  <diagram name="Hukuk Ofisi Platformu" id="vlJ0xAVNklmiGWOEp9HE">
+    <mxGraphModel dx="1959" dy="1131" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-1" parent="1" style="swimlane;html=1;rounded=1;fillColor=#000000;strokeColor=#0000CC;fontStyle=1;arcSize=18;startSize=23;" value="Frontend Layer" vertex="1">
+          <mxGeometry height="220" width="320" x="40" y="40" as="geometry">
+            <mxRectangle height="30" width="120" x="40" y="40" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-2" parent="j5JfEi6Nwrn4SeAP8_Ox-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Web App&#xa;Next.js + React" vertex="1">
+          <mxGeometry height="60" width="120" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-3" parent="j5JfEi6Nwrn4SeAP8_Ox-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Mobile App&#xa;Flutter" vertex="1">
+          <mxGeometry height="60" width="120" x="170" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-4" parent="j5JfEi6Nwrn4SeAP8_Ox-1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Client Portal" vertex="1">
+          <mxGeometry height="60" width="120" x="95" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-5" parent="1" style="swimlane;html=1;rounded=1;fillColor=#000000;strokeColor=#82b366;fontStyle=1;" value="Backend API Layer" vertex="1">
+          <mxGeometry height="520" width="420" x="420" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-6" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="API Gateway&#xa;REST + GraphQL" vertex="1">
+          <mxGeometry height="60" width="180" x="120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-7" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Auth Service" vertex="1">
+          <mxGeometry height="60" width="150" x="30" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-8" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Case Service" vertex="1">
+          <mxGeometry height="60" width="150" x="220" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-9" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Document Service" vertex="1">
+          <mxGeometry height="60" width="150" x="30" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-10" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Workflow Service" vertex="1">
+          <mxGeometry height="60" width="150" x="220" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-11" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Notification Service" vertex="1">
+          <mxGeometry height="60" width="150" x="30" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-12" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="AI Service" vertex="1">
+          <mxGeometry height="60" width="150" x="220" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-13" parent="j5JfEi6Nwrn4SeAP8_Ox-5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#000000;" value="Search Service" vertex="1">
+          <mxGeometry height="60" width="180" x="120" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-14" parent="1" style="swimlane;html=1;rounded=1;fillColor=#000000;strokeColor=#0000CC;fontStyle=1;" value="Data Layer" vertex="1">
+          <mxGeometry height="420" width="360" x="920" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-15" parent="j5JfEi6Nwrn4SeAP8_Ox-14" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#000000;" value="PostgreSQL" vertex="1">
+          <mxGeometry height="70" width="120" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-16" parent="j5JfEi6Nwrn4SeAP8_Ox-14" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#000000;" value="Redis Cache" vertex="1">
+          <mxGeometry height="70" width="120" x="200" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-17" parent="j5JfEi6Nwrn4SeAP8_Ox-14" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#000000;" value="Elasticsearch" vertex="1">
+          <mxGeometry height="70" width="120" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-18" parent="j5JfEi6Nwrn4SeAP8_Ox-14" style="shape=folder;whiteSpace=wrap;html=1;fillColor=#000000;" value="Object Storage&#xa;S3 Compatible" vertex="1">
+          <mxGeometry height="70" width="120" x="200" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="j5JfEi6Nwrn4SeAP8_Ox-19" parent="j5JfEi6Nwrn4SeAP8_Ox-14" style="shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;fillColor=#000000;" value="RabbitMQ" vertex="1">
+          <mxGeometry height="70" width="120" x="110" y="300" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

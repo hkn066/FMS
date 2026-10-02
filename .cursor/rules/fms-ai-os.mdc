@@ -1,0 +1,38 @@
+---
+description: FMS AI-OS boot protocol — her oturumda bağlamı yükle
+alwaysApply: true
+---
+
+# FMS AI Operating System
+
+Bu proje `.ai-os/` ile yönetilir. Kod yazmadan önce bağlamı yükle.
+
+## Boot Sequence
+
+1. `.ai-os/000_START_HERE.md` ve `.ai-os/AI_MANIFEST.md` oku
+2. Rolüne göre `.ai-os/05_AGENTS/<ROLE>.md` aç
+3. Proje hafızası: `.ai-os/02_MEMORY/CURRENT_STATE.md`, `LAST_SESSION.md`, `.ai-os/03_PLANNING/NEXT_TASK.md`
+4. Görev için gerekli teknik dosyaları yükle (tüm repo değil)
+5. Uygula: `.ai-os/07_STANDARDS/FMS_DEVELOPMENT_RULES.md` ve `.ai-os/06_PROMPTS/CURSOR_SYSTEM.md`
+
+## Hafıza Güncelleme (Zorunlu)
+
+Kod değişikliği sonrası güncelle:
+- `.ai-os/02_MEMORY/CURRENT_STATE.md`
+- `.ai-os/02_MEMORY/LAST_SESSION.md`
+- `.ai-os/02_MEMORY/CHANGELOG.md`
+- `.ai-os/03_PLANNING/TASKS.md` / `DONE.md` / `NEXT_TASK.md`
+
+## Geliştirme Modu
+
+Kullanıcı talebi önceliklidir. `03_PLANNING/NEXT_TASK.md` yalnızca öneridir.
+
+Backlog: `09_LOGS/AI_OS_BACKLOG.md` | Borç: `09_LOGS/TECH_DEBT.md`
+
+## Deprecated
+
+`ai-context/` kullanma — yönlendirme stub'larıdır. Birincil kaynak: `.ai-os/`
+
+## Dil
+
+Kod İngilizce; kullanıcıya Türkçe yanıt (kullanıcı İngilizce yazmadıkça).
