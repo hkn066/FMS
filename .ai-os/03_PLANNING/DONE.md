@@ -7,6 +7,32 @@ Tamamlanan en son milestone'lar ve görevler. Tarih sırasına göre (en yeni ü
 
 ---
 
+## 2026-10-20 — Dava Klasör Taşıma ve Dava İçeren Klasör Silme Koruması (TASK-DMS-012 ✅)
+
+**Tür:** Feature & Integrity Protection
+
+### ✅ Dava Dosyası Klasör Taşıma ve Koruma
+- **Backend Taşıma API'si:** `PUT /api/v1/cases/{id}/move-folder` endpoint'i yazıldı. `CaseDmsFolderService` kök klasörü olmayan davalar için otomatik provision ve hedef klasöre bağlama mantığıyla güçlendirildi.
+- **Backend Silme Koruması:** `FolderService.deleteFolder`, doğrudan bir davaya bağlı olan veya alt dizinlerinde dava/tahkim barındıran klasörlerin silinmesini kesin olarak engelledi.
+- **Frontend Taşıma Dialogu:** `/cases` tablosundaki `...` menüsüne "Klasöre Taşı" seçeneği ve `MoveCaseDialog` modalı eklendi.
+- **Frontend Ağaç Koruması:** `folderHasCases` ve `folderHasContent` güncellenerek dava dosyası içeren klasörler için silme aksiyonu engellendi ve uyarı ekranı detaylandırıldı.
+
+---
+
+## 2026-10-17 — Windows Run Script Docker Fallback ve Login Ortam Kurtarma (BUGFIX-INFRA-001 ✅)
+
+**Tür:** Bugfix & Dev Environment Resilience
+
+### ✅ Login Ortam Sorunu Çözüldü
+- Backend'in kapalı kalmasına neden olan PostgreSQL bağlantı hatası teşhis edildi (`localhost:5432 refused`).
+- Eski compose/proje etiketiyle kalan `fms-*` Docker konteynerleri nedeniyle oluşan isim çakışması için `run.ps1` fallback mekanizması eklendi.
+- `run.ps1`, Docker Compose başarısız olduğunda mevcut `fms-postgres`, `fms-redis`, `fms-rabbitmq`, `fms-minio` konteynerlerini veri silmeden başlatır hale getirildi.
+- Backend başlatılmadan önce altyapı health durumları beklenerek başlangıç yarışı azaltıldı.
+- `run.ps1 status`, compose boş döndüğünde gerçek Docker konteyner durumlarını listeler hale getirildi.
+- Doğrulama: `.\run.ps1 restart`, backend health ve admin login başarılı.
+
+---
+
 ## 2026-09-22 — DMS Klasör Ağacı İşlem İkonu Konumlandırması (TASK-DMS-011 ✅)
 
 **Tür:** UI/UX İyileştirmesi

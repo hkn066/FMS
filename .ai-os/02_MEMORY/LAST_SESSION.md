@@ -1,60 +1,60 @@
 # Last Session
 
-Date: 2026-10-02
+Date: 2026-10-20
 
 Agent: Cursor (Full-Stack Implementer)
 
-Status: **FMS Ana Repo + FMS-BE & FMS-FE Git Submodule Mimarisi Kuruldu (INFRA-GIT-002 ✅)**
+Status: **Dava Klasör Taşıma ve Dava İçeren Klasör Silme Koruması Tamamlandı (TASK-DMS-012 ✅)**
 
 ---
 
 ## Objectives
 
-1. **Git Submodule Ayrıştırması:** Kullanıcı talebi doğrultusunda monolitik yapıdan Git Submodule mimarisine geçilmesi. `FMS` ana repo altında `FMS-BE` (Spring Boot) ve `FMS-FE` (Next.js 15) alt repoları bağımsız Git depoları olarak yapılandırıldı.
-2. **Klasör Yeniden Adlandırma:** `FMS_BackEnd` -> `FMS-BE` ve `FMS_FrontEnd` -> `FMS-FE` olarak güncellendi.
-3. **Otomasyon & Script Senkronizasyonu:** `run.ps1`, `run.sh`, `scripts/setup-github.ps1` ve AI-OS dokümantasyonları yeni dizin yapısına uyarlandı.
-4. **Push Hazırlığı:** Kullanıcının GitHub hesabına (`hkn066`) push yapabilmesi için `scripts/push-all.ps1` tek komutluk yardımcı script hazırlandı.
+1. Klasör bağı kopmuş veya taşınmak istenen davaların kullanıcı tarafından arayüzden seçilerek istenen bir klasörün (`Genel Davalar` kökü veya `abcd` gibi alt klasörler) altına taşınabilmesini sağlamak.
+2. Klasörün altında dava dosyası varken klasörlerin silinebilmesi açığını hem backend API hem de frontend UI seviyesinde kesin olarak engellemek.
 
 ---
 
 ## Technical Details
 
-- `FMS-BE` ve `FMS-FE` dizinlerinde `git init`, initial commit ve `origin` remote tanımlamaları (`https://github.com/hkn066/FMS-BE.git` ve `https://github.com/hkn066/FMS-FE.git`) tamamlandı.
-- Kök `FMS` deposunda `.gitmodules` tanımlandı ve alt modüller gitlink (`160000`) olarak bağlandı.
-- Kök deponun `origin` remote adresi `https://github.com/hkn066/FMS.git` olarak atandı.
+- **Backend Taşıma:** `CaseController` & `CaseService` katmanına `PUT /api/v1/cases/{id}/move-folder` endpoint'i eklendi. `CaseDmsFolderService.moveCaseFolder` ile kök klasörü olmayan veya önceden silinmiş davalar için kök ve 5 standart alt klasör yeniden provision edilir ve hedef klasör altına bağlanır.
+- **Backend Silme Koruması:** `FolderService.deleteFolder` metodunda doğrudan davanın kök klasörü (`caseRepository.countCasesByDmsRootFolderId`) ve hiyerarşik olarak alt klasörlerinde dava/tahkim barındıran durumlar (`countCasesByDmsRootFolderIdIn`) kontrol edilerek silme işlemi `BusinessException` ile engellendi.
+- **Frontend Taşıma Dialogu:** `MoveCaseDialog` modalı ve `CasesTable` satır menüsüne "Klasöre Taşı" seçeneği eklendi; `useMoveCaseFolder` mutasyonu ile entegre edildi.
+- **Frontend Silme Koruması:** `folder-tree-utils.ts` içindeki `folderHasContent` ve `folderHasCases` fonksiyonları dava varlığını kontrol edecek şekilde güncellendi; `DmsExplorer` silme uyarı modalı ve buton engellemesi uygulandı.
 
 ---
 
 ## Modified Files
 
-- `.gitmodules` (Oluşturuldu)
-- `run.ps1`, `run.sh`, `scripts/setup-github.ps1` (Güncellendi)
-- `scripts/push-all.ps1` (Oluşturuldu)
-- `.ai-os/` (Doküman ve yol senkronizasyonları tamamlandı)
-
-- **Klasör Ağacı Buton Konumu:** Daha önce `...` butonu satırın en sağında yer alıyordu; geniş panellerde veya kısa klasör isimlerinde buton ile klasör arasında büyük boşluk kalıyor ve imleç mesafesini artırıyordu.
-
----
-
-## Completed Work
-
-### 1. Backend İyileştirmeleri (Spring Boot 3.4.5 & Spring Security)
-- **`JwtAuthenticationFilter.java`:** Token ayrıştırma ve kullanıcı doğrulama işlemi `try-catch (JwtException | IllegalArgumentException e)` bloğuna alındı. Süresi dolmuş token fırlattığında exception yakalanıp `log.debug` ile loglanarak `SecurityContext` temiz bırakıldı ve filtre zinciri (`filterChain.doFilter`) kesintisiz devam ettirildi.
-- **`JwtAuthenticationFilterTest.java`:** Expired token ve malformed token durumlarında exception fırlatılmadığını ve zincirin sorunsuz devam ettiğini doğrulayan 2 birim testi eklendi. `JwtServiceTest` ve `AuthServiceTest` testleri ile birlikte tüm güvenlik testleri başarıyla geçti.
-
-### 2. Frontend İyileştirmeleri (Next.js 15 & React 19)
-- **`lib/api-client.ts`:** Axios request interceptor güncellendi; `/auth/login` ve `/auth/refresh` isteklerinde `Authorization` başlığı kaldırıldı ve isteklerin temiz gönderilmesi sağlandı.
-- **`app/login/page.tsx`:** Sayfa yüklendiğinde (`useEffect`) `clearAuth()` çağrılarak eski/süresi dolmuş yerel oturum kalıntılarının temizlenmesi sağlandı.
-- **`components/documents/folder-tree.tsx`:**
-  - `FolderItem` içindeki dropdown aksiyon butonu (`...`), klasör ikonundan (`Folder` / `FolderOpen`) hemen önceye taşındı.
-  - Açılır menü `align="start"` ile panel içine doğru açılacak şekilde hizalandı.
-  - Sürükle-bırak sırasında buton tıklandığında veya sürüklendiğinde istem dışı klasör taşıma tetiklenmemesi için `onDragStart={(e) => e.stopPropagation()}` uygulandı.
-  - Buton boyutu `h-5 w-5` olarak ayarlanıp hiyerarşi chevron'u ve klasör ikonu ile kusursuz dikey hizalama sağlandı.
+- `FMS-BE/src/main/java/com/lawoffice/fms/casemanagement/presentation/CaseController.java`
+- `FMS-BE/src/main/java/com/lawoffice/fms/casemanagement/application/CaseService.java`
+- `FMS-BE/src/main/java/com/lawoffice/fms/casemanagement/application/CaseDmsFolderService.java`
+- `FMS-BE/src/main/java/com/lawoffice/fms/casemanagement/application/dto/MoveCaseFolderRequest.java`
+- `FMS-BE/src/main/java/com/lawoffice/fms/casemanagement/infrastructure/CaseRepository.java`
+- `FMS-BE/src/main/java/com/lawoffice/fms/arbitration/infrastructure/ArbitrationCaseRepository.java`
+- `FMS-BE/src/main/java/com/lawoffice/fms/document/application/FolderService.java`
+- `FMS-BE/src/test/java/com/lawoffice/fms/document/application/FolderServiceTest.java`
+- `FMS-FE/src/services/case.service.ts`
+- `FMS-FE/src/hooks/use-api.ts`
+- `FMS-FE/src/lib/folder-tree-utils.ts`
+- `FMS-FE/src/components/case/move-case-dialog.tsx`
+- `FMS-FE/src/components/case/cases-table.tsx`
+- `FMS-FE/src/components/documents/folder-tree.tsx`
+- `FMS-FE/src/components/documents/dms-explorer.tsx`
+- `FMS-FE/src/app/cases/page.tsx`
+- `.ai-os/02_MEMORY/CURRENT_STATE.md`
+- `.ai-os/02_MEMORY/CHANGELOG.md`
+- `.ai-os/02_MEMORY/LAST_SESSION.md`
+- `.ai-os/03_PLANNING/DONE.md`
+- `.ai-os/03_PLANNING/TASKS.md`
+- `.ai-os/03_PLANNING/NEXT_TASK.md`
 
 ---
 
 ## Verification & Status
 
-- **Birim Testleri:** `mvn test "-Dtest=JwtAuthenticationFilterTest,JwtServiceTest,AuthServiceTest"` başarıyla tamamlandı (4/4 test geçti).
-- **Frontend Derleme:** `npm run build` ile Next.js 15 prodüksiyon derlemesi ve TypeScript denetimleri 0 hata ile tamamlandı (17/17 sayfa).
-- **Servis Durumu:** `./run.ps1 restart` ve `status` ile PostgreSQL, Redis, RabbitMQ, MinIO, Backend (Port 8080) ve Frontend (Port 3000) çalışır durumda doğrulandı.
+- Backend derleme ve testleri (`mvn test-compile`, `mvn test`): 29 test başarıyla geçti (BUILD SUCCESS).
+- Frontend derleme ve type check (`npm run build`): Sıfır hata ile derlendi (Compiled successfully, production static & dynamic rotaları oluşturuldu).
+- Runtime doğrulaması: `.\run.ps1 restart` ile PostgreSQL, Redis, RabbitMQ, MinIO, Backend (Port 8080) ve Frontend (Port 3000) başarıyla ayağa kaldırıldı.
+- `GET http://localhost:8080/actuator/health` sonucu: `{"status":"UP"}`.
+- Dava taşıma hedef listesinde `abcd` gibi genel alt klasörlerin hiyerarşik seçimi sağlandı.

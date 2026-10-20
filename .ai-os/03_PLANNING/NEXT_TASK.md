@@ -1,6 +1,6 @@
 # Next Task
 
-Last Updated: 2026-09-22
+Last Updated: 2026-10-20
 
 Status: **SUGGESTED** (kullanıcı yönlendirmeli mod — DEC-002)
 
@@ -8,7 +8,9 @@ Status: **SUGGESTED** (kullanıcı yönlendirmeli mod — DEC-002)
 
 ## Son Tamamlanan (referans)
 
-**TASK-DMS-011** — DMS Klasör Ağacı İşlem İkonu Konumlandırması ✅ (2026-09-22)  
+**TASK-DMS-012** — Dava Klasör Taşıma ve Dava İçeren Klasör Silme Koruması ✅ (2026-10-20)  
+Önceki: **BUGFIX-INFRA-001** — Windows `run.ps1` Docker fallback ve login ortam kurtarma ✅ (2026-10-17)  
+Önceki: **TASK-DMS-011** — DMS Klasör Ağacı İşlem İkonu Konumlandırması ✅ (2026-09-22)  
 Önceki: **BUGFIX-AUTH-001** — Expired JWT Yönetimi ve Login Giriş Hatası Düzeltmesi ✅ (2026-09-22)  
 Önceki: **TASK-DMS-010** — Klasör Marquee Taşma Kontrolü, Konumlandırma, Yatay Scroll, Sekme Genişletme ve Login Yönlendirmesi ✅ (2026-09-21)  
 Önceki: **TASK-DMS-009** — DMS Klasör Görünümü, Sidebar Kırılımları ve Resizable Tab İyileştirmeleri ✅ (2026-09-21)  

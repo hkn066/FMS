@@ -4,6 +4,37 @@ Tüm önemli proje değişiklikleri burada kayıt altına alınır.
 
 ---
 
+## 2026-10-20
+
+### Özellik & Güvenlik — Dava Klasör Taşıma ve Dava İçeren Klasör Silme Koruması (TASK-DMS-012 ✅)
+
+- **Backend:**
+  - `PUT /api/v1/cases/{id}/move-folder` endpoint'i ve `MoveCaseFolderRequest` DTO'su oluşturuldu.
+  - `CaseDmsFolderService.moveCaseFolder`: Davanın kök klasörünü istenen hedef klasöre bağlar; davanın DMS kök klasörü önceden silinmiş veya kopmuşsa otomatik olarak kök ve 5 alt klasörü baştan oluşturarak bağlar.
+  - `FolderService.deleteFolder`: Dava veya tahkim dosyasına ait olan veya alt dizinlerinde dava/tahkim dosyası barındıran klasörlerin silinmesi engellendi (`countCasesByDmsRootFolderId`, `countCasesByDmsRootFolderIdIn`).
+  - `CaseRepository` ve `ArbitrationCaseRepository`'ye ilgili JPA sorguları eklendi.
+  - `FolderServiceTest` birim testleri ile korundu.
+- **Frontend:**
+  - `components/case/move-case-dialog.tsx`: Dava dosyasını `Genel Davalar` altındaki herhangi bir klasöre taşımayı sağlayan dialog bileşeni oluşturuldu.
+  - `components/case/cases-table.tsx`: Satır içi `...` işlem menüsüne "Klasöre Taşı" seçeneği eklendi.
+  - `hooks/use-api.ts`: `useMoveCaseFolder` mutasyonu eklendi.
+  - `lib/folder-tree-utils.ts`: `folderHasCases` fonksiyonu eklendi; `folderHasContent` denetimine dava/tahkim varlığı entegre edildi.
+  - `components/documents/dms-explorer.tsx` & `folder-tree.tsx`: Dava içeren klasörler için silme aksiyonu engellendi ve açıklayıcı uyarı modalları ile korundu.
+  - `app/cases/page.tsx`: Alt klasör ve dava kök klasör eşleştirmesi ile filtreleme güçlendirildi.
+
+---
+
+## 2026-10-17
+
+### Bugfix — Windows Run Script Docker Fallback ve Login Ortam Kurtarma (BUGFIX-INFRA-001 ✅)
+
+- `run.ps1`, Docker Compose mevcut fakat farklı/eskiden kalmış proje etiketiyle duran `fms-*` konteynerlerini sahiplenemediğinde isimli konteyner fallback'i ile altyapıyı başlatacak şekilde güçlendirildi.
+- Backend başlatılmadan önce PostgreSQL, Redis, RabbitMQ ve MinIO konteynerlerinin Docker health durumları beklenir hale getirildi; `localhost:5432 refused` nedeniyle backend'in açılmaması ve login yapılamaması engellendi.
+- `run.ps1 status`, compose çıktısı boş kaldığında gerçek `fms-postgres`, `fms-redis`, `fms-rabbitmq`, `fms-minio`, `fms-pgadmin`, `fms-backend` durumlarını doğrudan Docker üzerinden listeler.
+- Doğrulama: `.\run.ps1 restart`, `/actuator/health` ve `POST /api/v1/auth/login` başarılı.
+
+---
+
 ## 2026-10-02
 
 ### Altyapı — FMS Ana Repo + FMS-BE & FMS-FE Git Submodule Mimarisi (INFRA-GIT-002 ✅)

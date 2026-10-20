@@ -2,7 +2,7 @@
 
 Aktif ve yakın vadeli görevler. Tamamlananlar yalnızca `03_PLANNING/DONE.md`'de tutulur.
 
-Son temizlik: 2026-09-22 (tamamlanan TASK-CASE-002, TASK-DMS-009, TASK-DMS-010, TASK-DMS-011 ve BUGFIX-AUTH-001 görevleri DONE'a aktarıldı)
+Son temizlik: 2026-10-20 (tamamlanan TASK-DMS-012 DONE'a eklendi; aktif ürün backlog'u korunuyor)
 
 ---
 
@@ -34,6 +34,7 @@ Son temizlik: 2026-09-22 (tamamlanan TASK-CASE-002, TASK-DMS-009, TASK-DMS-010, 
 - [x] Klasör işlemleri Radix UI pointer-events kilitlenme ve auto-expand çözümü (TASK-DMS-008)
 - [x] Akıllı marquee animasyonu ve çift yönlü scroll (TASK-DMS-010)
 - [x] Klasör işlem butonunun (`...`) klasör ikonu önüne taşınması ve başlangıca hizalama (TASK-DMS-011)
+- [x] Dava klasör taşıma ve dava içeren klasör silme koruması (TASK-DMS-012)
 - [ ] PDF preview component
 - [ ] Version history modal
 - [ ] Bulk select + bulk delete/download

@@ -1,6 +1,6 @@
 # Current State
 
-Son güncelleme: 2026-10-02 (Kök .gitignore, Git İndeks Temizliği & Prompt Kılavuzu — INFRA-GIT-001)
+Son güncelleme: 2026-10-20 (Dava Klasör Taşıma ve Dava İçeren Klasör Silme Koruması — TASK-DMS-012 ✅)
 
 Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli milestone sonrası güncellenmelidir.
 
@@ -10,8 +10,8 @@ Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli mi
 
 | Bileşen | Durum | Tamamlanma |
 |---------|-------|------------|
-| Backend API | Çalışır durumda | ~95% |
-| Frontend Web | Çalışır durumda | ~94% |
+| Backend API | Çalışır durumda | ~96% |
+| Frontend Web | Çalışır durumda | ~95% |
 | Docker ortamı | Çalışır durumda (Postgres, Redis, RabbitMQ, MinIO) | ~95% |
 | Git / GitHub | FMS (Ana Repo) + FMS-BE & FMS-FE (Submodule) hazır | Push bekliyor |
 | Mobil (Flutter) | Başlanmadı | 0% |
@@ -32,9 +32,9 @@ Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli mi
 | user | ✅ Tam | CRUD, profil |
 | role | ✅ Tam | RBAC, Permission |
 | client | ✅ Tam | Müvekkil CRUD; tenant-aware repository |
-| casemanagement | ✅ Tam | Dava CRUD; tenant-aware repository; yıl bazlı sıralı dosya no üretici (`CaseNumberService`), esas/karar no, taraf/vekil, araç (plaka/info), claim amount |
+| casemanagement | ✅ Tam | Dava CRUD; tenant-aware repository; yıl bazlı sıralı dosya no üretici (`CaseNumberService`), esas/karar no, taraf/vekil, araç (plaka/info), claim amount, **Dava klasör taşıma (`PUT /api/v1/cases/{id}/move-folder`)** |
 | arbitration | ✅ Tam | CRUD REST + evrak MinIO; `/api/v1/arbitration/*` |
-| document | ✅ Tam | MinIO + **DMS klasör hiyerarşisi** (`folders`, `/api/v1/folders`); `DmsFolderHierarchyService` org bootstrap (`Genel Davalar` / `Sigorta Tahkim`); tahkim otomatik klasör provision; **Genel Davalar kök ve 5 şablon alt klasör otomasyonu (`CaseDmsFolderService`)** |
+| document | ✅ Tam | MinIO + **DMS klasör hiyerarşisi** (`folders`, `/api/v1/folders`); `DmsFolderHierarchyService` org bootstrap (`Genel Davalar` / `Sigorta Tahkim`); tahkim otomatik klasör provision; Genel Davalar kök ve 5 şablon alt klasör otomasyonu (`CaseDmsFolderService`); **Dava dosyası içeren klasör silme koruması (`FolderService.deleteFolder`)** |
 | workflow | ✅ Tam | Task CRUD, Kanban status |
 | hearing | ✅ Tam | Duruşma CRUD |
 | notification | ✅ Temel | RabbitMQ publish |
@@ -114,6 +114,19 @@ Bu dosya projenin **gerçek implementasyon durumunu** yansıtır. Her önemli mi
 **Stack:** Next.js 15.3.3, React 19.1.0, Tailwind 4.1.8, TanStack Query 5.80.7, Zustand 5.0.5
 
 ### Son Değişiklikler (Sprint 2)
+
+**Dava Klasör Taşıma ve Dava İçeren Klasör Silme Koruması (TASK-DMS-012 ✅, 2026-10-20)**
+- **Backend:**
+  - `CaseController` & `CaseService`: `PUT /api/v1/cases/{id}/move-folder` endpoint'i ve `moveCaseFolder` servisi eklendi. Yetim veya silinmiş kök klasörleri otomatik re-provision ederek hedef klasörün altına bağlar.
+  - `CaseRepository` & `ArbitrationCaseRepository`: `countCasesByDmsRootFolderId` ve `countCasesByDmsRootFolderIdIn` metodları eklendi.
+  - `FolderService.deleteFolder`: Bir klasörün veya onun alt dizinlerinin dava/tahkim dosyası barındırması durumunda silme işlemi engellendi.
+  - `FolderServiceTest`: Yeni silme kısıtı birim testleri eklendi.
+- **Frontend:**
+  - `MoveCaseDialog`: Dava tablosunda `...` menüsünden çağrılabilen "Klasöre Taşı" modalı geliştirildi. `Genel Davalar` altındaki hedef klasörleri girintili liste olarak sunar ve anında taşımayı sağlar.
+  - `CasesTable`: Dava satır menüsüne "Klasöre Taşı" seçeneği entegre edildi.
+  - `folder-tree-utils.ts`: `folderHasCases` yardımcı fonksiyonu ve dava/tahkim dosyası içeren klasörler için `folderHasContent` denetimi eklendi.
+  - `dms-explorer.tsx` & `folder-tree.tsx`: Dava içeren klasörlerin doğrudan silinmesi engellendi ve açıklayıcı uyarı modalı güncellendi.
+  - `cases/page.tsx`: Dava kök klasörünün altındaki dosyaları da tespit eden filtreleme mekanizması güçlendirildi.
 
 **DMS Klasör Ağacı İşlem İkonu Konumlandırması (TASK-DMS-011 ✅, 2026-09-22)**
 - `folder-tree.tsx`: Klasör işlemlerini tetikleyen `...` (`MoreHorizontal`) butonu satır sonundan alınarak doğrudan klasör ikonunun (`Folder` / `FolderOpen`) hemen önüne taşındı. Menü açılış hizalaması `align="start"` yapılarak panel içine doğru açılması sağlandı. Sürükleme karışıklığını önlemek adına butona `onDragStart stopPropagation` eklendi.
@@ -261,6 +274,11 @@ Tüm çalıştırma adımları, portlar, ortam değişkenleri ve yerel Scoop fal
 - **Durum Kontrolü:** `./run.sh status` veya `.\run.ps1 status`
 - **Canlı Log:** `./run.sh logs backend` / `./run.sh logs frontend`
 - **Ayrıntılı rehber:** Bkz. `04_CONTEXT/RUNBOOK.md`
+
+**Windows PowerShell dayanıklılığı (2026-10-17):**
+- `run.ps1`, Docker Compose eski proje etiketi nedeniyle mevcut `fms-*` konteynerlerini sahiplenemediğinde isimli konteyner fallback'i ile `fms-postgres`, `fms-redis`, `fms-rabbitmq`, `fms-minio` konteynerlerini veri silmeden başlatır.
+- Backend başlatılmadan önce altyapı konteynerlerinin `healthy` durumuna gelmesi beklenir; bu sayede login'i bozan `localhost:5432 refused` başlangıç yarışı engellenir.
+- `run.ps1 status`, compose çıktısı boş kaldığında isimli konteyner durumlarını doğrudan Docker üzerinden gösterir.
 
 ---
 

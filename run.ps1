@@ -20,6 +20,12 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $BackendDir = Join-Path $ScriptDir "FMS-BE"
 $FrontendDir = Join-Path $ScriptDir "FMS-FE"
 $LogsDir = Join-Path $ScriptDir "logs"
+$InfrastructureContainers = @(
+    @{ Name = "fms-postgres"; Label = "PostgreSQL" },
+    @{ Name = "fms-redis"; Label = "Redis" },
+    @{ Name = "fms-rabbitmq"; Label = "RabbitMQ" },
+    @{ Name = "fms-minio"; Label = "MinIO" }
+)
 
 if (-not (Test-Path $LogsDir)) {
     New-Item -ItemType Directory -Path $LogsDir | Out-Null
@@ -53,6 +59,65 @@ function Stop-PortProcess($port, $name) {
     }
 }
 
+function Test-DockerContainerExists($name) {
+    $existing = docker ps -a --filter "name=^/$name$" --format "{{.Names}}" 2>$null
+    return ($LASTEXITCODE -eq 0 -and $existing -eq $name)
+}
+
+function Start-NamedInfrastructureContainers {
+    $foundAny = $false
+
+    foreach ($container in $InfrastructureContainers) {
+        $name = $container.Name
+        if (Test-DockerContainerExists $name) {
+            $foundAny = $true
+            $running = docker inspect -f "{{.State.Running}}" $name 2>$null
+            if ($running -eq "true") {
+                Log-Info "$name zaten calisiyor."
+            } else {
+                Log-Info "$name baslatiliyor..."
+                docker start $name | Out-Null
+            }
+        }
+    }
+
+    return $foundAny
+}
+
+function Wait-ForContainerReady($name, $label, $timeoutSeconds = 90) {
+    Write-Host -NoNewline "   $label hazir olmasi bekleniyor "
+
+    for ($i = 0; $i -lt $timeoutSeconds; $i += 2) {
+        $running = docker inspect -f "{{.State.Running}}" $name 2>$null
+        $health = docker inspect -f "{{if .State.Health}}{{.State.Health.Status}}{{else}}none{{end}}" $name 2>$null
+
+        if ($running -eq "true" -and ($health -eq "healthy" -or $health -eq "none")) {
+            Write-Host ""
+            return $true
+        }
+
+        Write-Host -NoNewline "."
+        Start-Sleep -Seconds 2
+    }
+
+    Write-Host ""
+    Log-Warn "$label zamaninda hazir olmadi."
+    return $false
+}
+
+function Show-NamedDockerStatus {
+    $containerNames = @("fms-postgres", "fms-redis", "fms-rabbitmq", "fms-minio", "fms-pgadmin", "fms-backend")
+
+    Write-Host ("{0,-14} {1,-32} {2}" -f "NAME", "STATUS", "PORTS")
+    foreach ($name in $containerNames) {
+        $line = docker ps -a --filter "name=^/$name$" --format "{{.Names}}|{{.Status}}|{{.Ports}}" 2>$null
+        if ($line) {
+            $parts = $line -split "\|", 3
+            Write-Host ("{0,-14} {1,-32} {2}" -f $parts[0], $parts[1], $parts[2])
+        }
+    }
+}
+
 function Ensure-Docker {
     Log-Info "Docker ortami kontrol ediliyor..."
     $null = docker info 2>&1
@@ -80,8 +145,26 @@ function Ensure-Docker {
 
     Log-Info "Altyapi konteynerleri (PostgreSQL, Redis, RabbitMQ, MinIO) baslatiliyor..."
     Push-Location $BackendDir
-    docker compose up -d postgres redis rabbitmq minio | Out-Null
+    $composeOutput = docker compose up -d postgres redis rabbitmq minio 2>&1
+    $composeExitCode = $LASTEXITCODE
     Pop-Location
+
+    if ($composeExitCode -ne 0) {
+        Log-Warn "Docker Compose altyapi baslatmada hata verdi. Mevcut fms-* konteynerleri kontrol ediliyor..."
+        if (-not (Start-NamedInfrastructureContainers)) {
+            Log-Error "Altyapi konteynerleri baslatilamadi."
+            $composeOutput | ForEach-Object { Write-Host $_ }
+            exit 1
+        }
+    }
+
+    foreach ($container in $InfrastructureContainers) {
+        if (-not (Wait-ForContainerReady $container.Name $container.Label)) {
+            Log-Error "$($container.Label) hazir olmadigi icin backend baslatilmayacak."
+            exit 1
+        }
+    }
+
     Log-Success "Docker servisleri hazir."
 }
 
@@ -96,6 +179,16 @@ function Stop-All {
     Push-Location $BackendDir
     docker compose stop | Out-Null
     Pop-Location
+
+    foreach ($container in ($InfrastructureContainers.Name + @("fms-pgadmin", "fms-backend"))) {
+        if (Test-DockerContainerExists $container) {
+            $running = docker inspect -f "{{.State.Running}}" $container 2>$null
+            if ($running -eq "true") {
+                docker stop $container | Out-Null
+            }
+        }
+    }
+
     Log-Success "FMS projesi tamamen durduruldu."
 }
 
@@ -118,8 +211,15 @@ function Show-Status {
 
     Write-Host "`nDocker Konteynerleri:" -ForegroundColor Yellow
     Push-Location $BackendDir
-    docker compose ps
+    $composeStatus = docker compose ps 2>&1
+    $composeExitCode = $LASTEXITCODE
     Pop-Location
+    $composeLines = @($composeStatus | Where-Object { $_ -and $_.ToString().Trim() -ne "" })
+    if ($composeExitCode -eq 0 -and $composeLines.Count -gt 1) {
+        $composeStatus
+    } else {
+        Show-NamedDockerStatus
+    }
     Write-Host ""
 }
 
